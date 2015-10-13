@@ -1,0 +1,6 @@
+bower_components
+.idea
+.DS_STORE
+*.iml
+ROOT
+node_modules
