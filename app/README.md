@@ -1,38 +1,13 @@
-# User Management client
+# sample-angularjs-crud-users
+Sample AngularJS application with Add, Edit, List, and Delete Users
 
-Angular-js front end for the user-api.
+## Requirements
+* Node.js
+* AngularJS
+* Bower
+* Grunt
 
-
-##Initialize your workspace
-
-
-```bash
-
-$npm install
-$bower install
-
-
-```
-
-##Building
-
-```bash
-
-grunt build:dev
-
-```
-
-##Running
-
-```bash
-
-grunt
-
-```
-
-open your browser to `http://localhost:8000`
-
-##Making changes
-
-everytime you change something on the code the javascript is automatically updated
-so you don't have to run grunt again.
+## Compile and Run
+* npm install
+* bower install
+* grunt local
