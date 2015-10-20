@@ -10,7 +10,7 @@ var app = angular.module('app', [
     'app.user-list',
     'xeditable'
 ])
-    .config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider)
+    .config(function($urlRouterProvider, $stateProvider)
     {
         $urlRouterProvider.otherwise('/users');
 
@@ -19,10 +19,10 @@ var app = angular.module('app', [
                 abstract: true,
                 template: '<ui-view/>'
             });
-    }])
-    .run(['editableOptions', function(editableOptions) {
+    })
+    .run(function(editableOptions) {
         editableOptions.theme = 'bs3';
-    }]);
+    });
 /**
  * App configuration.
  */
@@ -41,10 +41,10 @@ angular.module('app.filters', []);
  */
 angular.module('app.constants', ['ngResource']);
 angular.module('app.restServices', ['ngResource'])
-    .factory('Users', ['$resource', 'ENV', function($resource, ENV)
+    .factory('Users', function($resource, ENV)
     {
         return $resource(ENV.apiEndpoint + "/users/:id", null, { 'update': { method: 'PUT' }})
-    }])
+    })
 ;
 /**
  * App services module.
@@ -63,12 +63,12 @@ angular.module('app.user-list', [])
         });
     }])
 
-    .controller('userListCtrl', ['$scope', function($scope)
+    .controller('userListCtrl', function($scope, $filter)
     {
         $scope.users = [
-            {id: 1, name: 'awesome user1', status: 2, group: 4, groupName: 'admin'},
-            {id: 2, name: 'awesome user2', status: undefined, group: 3, groupName: 'vip'},
-            {id: 3, name: 'awesome user3', status: 2, group: null}
+            {id: 1, name: 'awesome user1', status: 2, group: "admin"},
+            {id: 2, name: 'awesome user2', status: undefined, group: "guest"},
+            {id: 3, name: 'awesome user3', status: 2, group: "vip"}
         ];
 
         $scope.statuses = [
@@ -78,16 +78,23 @@ angular.module('app.user-list', [])
             {value: 4, text: 'status4'}
         ];
 
-        $scope.groups = [];
-        $scope.loadGroups = function() {
-            return $scope.groups.length ? null : $http.get('/groups').success(function(data) {
-                $scope.groups = data;
-            });
-        };
+        $scope.groups = [
+            {value: "admin", text: "Admin"},
+            {value: "vip", text: 'Vip'},
+            {value: "guest", text: 'Guest'},
+            {value: "owner", text: 'Owner'}
+        ];
+
+        //$scope.groups = [];
+//        $scope.loadGroups = function() {
+//            return $scope.groups.length ? null : $http.get('/groups').success(function(data) {
+//                $scope.groups = data;
+//            });
+//        };
 
         $scope.showGroup = function(user) {
             if(user.group && $scope.groups.length) {
-                var selected = $filter('filter')($scope.groups, {id: user.group});
+                var selected = $filter('filter')($scope.groups, {value: user.group});
                 return selected.length ? selected[0].text : 'Not set';
             } else {
                 return user.groupName || 'Not set';
@@ -130,4 +137,4 @@ angular.module('app.user-list', [])
             $scope.users.push($scope.inserted);
         };
 
-    }]);
+    });
