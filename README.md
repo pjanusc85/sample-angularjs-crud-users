@@ -8,5 +8,6 @@ Sample AngularJS application with Add, Edit, List, and Delete Users
 * Grunt
 
 ## Compile and Run
+* npm install
+* bower install
 * grunt local
-
