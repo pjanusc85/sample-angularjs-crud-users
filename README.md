@@ -11,3 +11,6 @@ Sample AngularJS application with Add, Edit, List, and Delete Users
 * npm install
 * bower install
 * grunt local
+
+## Open on desired browser
+* http://localhost:8000
